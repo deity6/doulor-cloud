@@ -147,7 +147,10 @@ export default function ChatPage() {
   }
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-8rem)] max-w-3xl flex-col">
+    // 8rem = 顶栏 h-14(3.5rem) + main 的 py-8(2rem×2)。iOS Safari 的 100vh 对应
+    // 地址栏收起时的大视口且键盘弹出不收缩，实际可视高度更小，底部输入行会被
+    // 地址栏/键盘遮挡；支持 dvh 的浏览器改用动态视口，旧浏览器保留 100vh 回退。
+    <div className="mx-auto flex h-[calc(100vh-8rem)] max-w-3xl flex-col supports-[height:100dvh]:h-[calc(100dvh-8rem)]">
       {/* 顶部：返回 + 标题 + 在线头像堆叠 */}
       <div className="flex items-center justify-between border-b pb-3">
         <div className="flex items-center gap-2">
