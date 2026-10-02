@@ -39,7 +39,10 @@ const DialogContent = React.forwardRef<
       className={cn(
         // 居中用内联 style 的 transform（最直接、不被 Tailwind translate 属性或任何
         // 动画覆盖）。宽度用 100vw 明确相对视口，避免 fixed 元素 100% 在移动端的坑。
-        "fixed left-1/2 top-1/2 z-50 grid w-[calc(100vw-2rem)] max-w-lg gap-4 border bg-background p-6 shadow-lg sm:rounded-lg",
+        // Radix 打开时会锁 body 滚动，弹窗又是垂直居中——内容一旦高于视口就上下两端
+        // 同时越界且无法滚动，标题/底部按钮点不到，所以基类必须带 max-h + 滚动保护。
+        // 85vh 与各页面手动补的既有值一致（admin/points 等处同值重复声明无害）。
+        "fixed left-1/2 top-1/2 z-50 grid w-[calc(100vw-2rem)] max-w-lg gap-4 max-h-[85vh] overflow-y-auto border bg-background p-6 shadow-lg sm:rounded-lg",
         className
       )}
       style={{ transform: "translate(-50%, -50%)" }}
